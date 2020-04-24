@@ -6,7 +6,7 @@ This is for the breadboard computer based off of Ben Eater's SAP 8-bit breadboar
 ### Writing code
 
 | Supported Instructions | Description |
-|:----------------------:|:-----------:|
+|:----------------------:|:----------- |
 | NOP | No operation |
 | LDA x\* | Load the contents from address x into the A register | 
 | ADD x\* | Add the contents from address x to the A register and store in the A register |
@@ -29,9 +29,9 @@ Examples are found in the /examples directory.
 ### Using the compiler
 
 ```
-python compile.py <-i, --in_path> <-v, --verbose> <out_path>
+python compile.py <-v, --verbose> <-o, --out_path> input_path
 ```
-- -i, the path to the file to compile
-- -v, verbose
-- out\_path, the output\_path of the compiled file. If not specified, will print to console in a readable format.
+- input\_path, the path to the file to compile (required)
+- -v, verbose flag
+- out\_path, the output path of the compiled file. If not specified, will print to console in a readable format.
 

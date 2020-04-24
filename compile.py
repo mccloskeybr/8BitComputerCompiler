@@ -4,9 +4,9 @@ from argparse import ArgumentParser
 verbose = False
 
 parser = ArgumentParser(description = 'Compile assembly to machine code for custom computer.')
-parser.add_argument('--in_path', '-i', type=str, help='Input file to be compiled.')
-parser.add_argument('--out_path', '-o', type=str, help = 'Output file path.', default = None)
-parser.add_argument('--verbose', '-v', action='store_true')
+parser.add_argument('in_path', metavar='input path', help='input file to be compile.')
+parser.add_argument('--out_path', '-o', type=str, help = 'output file path', default = None)
+parser.add_argument('--verbose', '-v', action='store_true', help = 'verbose flag')
 
 '''
 Individual functions per assembly instruction
