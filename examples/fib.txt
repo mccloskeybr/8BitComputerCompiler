@@ -1,15 +1,20 @@
 # Example code that generates the fibonacci sequence
 
-global x	# preset to 0
-global y	# preset to 1
+global z
+global y
+global x
 
-LDA x	# A -> x
+LDI 1
+STA y
+LDI 0
 OUT
-ADD y	# A -> x + y
-STA x	# x -> x + y
-OUT
-ADD y	# A -> x + y + y
-STA y	# y -> x + y + y
-JMP 0
-HLT
+ADD y
+STA z
+LDA y
+STA x
+LDA z
+STA y
+LDA x
+JC 0
+JMP 3
 
