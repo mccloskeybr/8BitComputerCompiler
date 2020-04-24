@@ -20,11 +20,11 @@ This is for the breadboard computer based off of Ben Eater's SAP 8-bit breadboar
 | HLT | Halt the clock |
 | global x | Defines variable x in the global scope (so you don't have to remember the addresses of globals) |
 
+Global variables can be added using the ```global``` instruction. These need to be pre-set in ram before program execution, however. **The addresses are stored from top to bottom** i.e., the first global variable defined is stored at address 15, the second at 14, and so on.
+
 Comments are supported using # (all characters after # are ignored).
 
 Adding additional commands is relatively easy, I encourage you to mess around with the code if it is at all interesting.
-
-Examples are found in the /examples directory.
 
 ### Using the compiler
 
@@ -34,4 +34,11 @@ python compile.py <-v, --verbose> <-o, --out_path> input_path
 - input\_path, the path to the file to compile (required)
 - -v, verbose flag
 - out\_path, the output path of the compiled file. If not specified, will print to console in a readable format.
+
+Running without an output prints the contents directly to the screen.
+![alt text](/res/fib_no_out.png)
+
+Running with an output produces a .bin file that contains the compiled code.
+![alt text](/res/fib_out.png)
+
 

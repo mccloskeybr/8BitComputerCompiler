@@ -1,6 +1,7 @@
 
 from argparse import ArgumentParser
 
+num_bytes_ram = 16
 verbose = False
 
 parser = ArgumentParser(description = 'Compile assembly to machine code for custom computer.')
@@ -19,43 +20,43 @@ def nop(cmd):
 def lda(cmd):
     if cmd[1].isdigit():
         return asm_to_machine[cmd[0]] << 4 | int(cmd[1])
-    return asm_to_machine[cmd[0]] << 4 | int(global_lookup.index(cmd[1]))
+    return asm_to_machine[cmd[0]] << 4 | get_var_addr(cmd[1])
 
 
 def add(cmd):
     if cmd[1].isdigit():
         return asm_to_machine[cmd[0]] << 4 | int(cmd[1])
-    return asm_to_machine[cmd[0]] << 4 | int(global_lookup.index(cmd[1]))
+    return asm_to_machine[cmd[0]] << 4 | get_var_addr(cmd[1])
 
 def sub(cmd):
     if cmd[1].isdigit():
         return asm_to_machine[cmd[0]] << 4 | int(cmd[1])
-    return asm_to_machine[cmd[0]] << 4 | int(global_lookup.index(cmd[1]))
+    return asm_to_machine[cmd[0]] << 4 | get_var_addr(cmd[1])
 
 def sta(cmd):
     if cmd[1].isdigit():
         return asm_to_machine[cmd[0]] << 4 | int(cmd[1])
-    return asm_to_machine[cmd[0]] << 4 | int(global_lookup.index(cmd[1]))
+    return asm_to_machine[cmd[0]] << 4 | get_var_addr(cmd[1])
 
 def ldi(cmd):
     if cmd[1].isdigit():
         return asm_to_machine[cmd[0]] << 4 | int(cmd[1])
-    return asm_to_machine[cmd[0]] << 4 | int(global_lookup.index(cmd[1]))
+    return asm_to_machine[cmd[0]] << 4 | get_var_addr(cmd[1])
 
 def jmp(cmd):
     if cmd[1].isdigit():
         return asm_to_machine[cmd[0]] << 4 | int(cmd[1])
-    return asm_to_machine[cmd[0]] << 4 | int(global_lookup.index(cmd[1]))
+    return asm_to_machine[cmd[0]] << 4 | get_var_addr(cmd[1])
 
 def jc(cmd):
     if cmd[1].isdigit():
         return asm_to_machine[cmd[0]] << 4 | int(cmd[1])
-    return asm_to_machine[cmd[0]] << 4 | int(global_lookup.index(cmd[1]))
+    return asm_to_machine[cmd[0]] << 4 | get_var_addr(cmd[1])
 
 def jz(cmd):
     if cmd[1].isdigit():
         return asm_to_machine[cmd[0]] << 4 | int(cmd[1])
-    return asm_to_machine[cmd[0]] << 4 | int(global_lookup.index(cmd[1]))
+    return asm_to_machine[cmd[0]] << 4 | get_var_addr(cmd[1])
 
 def out(cmd):
     return asm_to_machine[cmd[0]] << 4 & 0xf0
@@ -65,6 +66,10 @@ def hlt(cmd):
 
 def global_var(cmd):
     global_lookup.append(cmd[1])
+
+def get_var_addr(var):
+    # builds globals backwards from maximum
+    return num_bytes_ram - 1 - global_lookup.index(var)
 
 '''
 define lookup tables:
@@ -146,21 +151,20 @@ def main():
         try:
             compiled = asm_parse[cmd[0]](cmd)
             if compiled is not None:
-                compiled = format(compiled, '08b')
                 if verbose:
-                    print(cmd + [compiled])
+                    print(cmd + [format(compiled, '08b')])
                 compiled_cmds.append(compiled)
         except:
             raise Exception('ERR on line ' + str(i) + ' (' + cmd[0] + '): Could not compile.')
 
     # write compiled commands to file
     if output_path is not None:
-        output_file = open(output_path, 'w')
-        for cmd in compiled_cmds:
-            output_file.write(cmd)
+        output_file = open(output_path, 'wb')
+        output_file.write(bytes(compiled_cmds))
+        output_file.close()
     else:
         for cmd in compiled_cmds:
-            print(cmd)
+            print(format(cmd, '08b'))
 
 if __name__ == '__main__':
     main()
