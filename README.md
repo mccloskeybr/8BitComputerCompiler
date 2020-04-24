@@ -36,9 +36,11 @@ python compile.py <-v, --verbose> <-o, --out_path> input_path
 - out\_path, the output path of the compiled file. If not specified, will print to console in a readable format.
 
 Running without an output prints the contents directly to the screen.
+
 ![alt text](/res/fib_no_out.png)
 
 Running with an output produces a .bin file that contains the compiled code.
+
 ![alt text](/res/fib_out.png)
 
 
